@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:FacebookCleanup.xcodeproj">
+      location = "self:/Users/tolar/Developer/workspace/FacebookCleanup/FBCleanup.xcodeproj">
    </FileRef>
 </Workspace>

@@ -8,19 +8,25 @@
 
 import UIKit
 import SwiftUI
+import Contacts
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
-
+    let contactsCleaner = ContactsCleaner()
+    var contentView: ContentView?
+    var contactsToClean: [CNContact]?
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView()
+        let contentView = ContentView { [weak self] in
+            self?.deleteFacebookURLsFromContacts()
+        }
+        self.contentView = contentView
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
@@ -29,7 +35,58 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = window
             window.makeKeyAndVisible()
         }
+        
+        refreshContacts()
     }
+    
+    private func refreshContacts() {
+        contactsCleaner.fetch { [weak self] (cnContacts, error) in
+            if let cnContacts = cnContacts {
+                if cnContacts.count > 0 {
+                    self?.display(cnContacts)
+                } else {
+                    DispatchQueue.main.async { [weak self] in
+                        let emptyView = EmptyView()
+                        self?.window?.rootViewController = UIHostingController(rootView: emptyView)
+                    }
+                }
+            } else if let error = error {
+                DispatchQueue.main.async { [weak self] in
+                    let errorView = ErrorView(error: error) {
+                        if let url = URL(string:UIApplication.openSettingsURLString),
+                            UIApplication.shared.canOpenURL(url) {
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        }
+                    }
+                    self?.window?.rootViewController = UIHostingController(rootView: errorView)
+                }
+            }
+        }
+    }
+    
+    func display(_ cnContacts: [CNContact]) {
+        let fbContacts = cnContacts.map { (contact) -> FacebookContact in
+            return FacebookContact(contact: contact)
+        }.sorted { (a, b) -> Bool in
+            return a.name.compare(b.name) == .orderedAscending
+        }
+        
+        contactsToClean = cnContacts
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.contentView?.viewModel.contacts = fbContacts
+        }
+    }
+    
+    func deleteFacebookURLsFromContacts() {
+        guard let contactsToClean = contactsToClean, contactsToClean.count > 0 else { return }
+        
+        contactsCleaner.deleteFacebookURLs(from: contactsToClean)
+        
+        refreshContacts()
+    }
+    
+
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
