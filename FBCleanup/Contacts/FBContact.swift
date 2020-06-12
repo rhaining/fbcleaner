@@ -1,6 +1,6 @@
 //
-//  FacebookContact.swift
-//  FacebookCleanup
+//  FBContact.swift
+//  FBCleanup
 //
 //  Created by Robert Tolar Haining on 6/9/20.
 //  Copyright © 2020 Robert Tolar Haining. All rights reserved.
@@ -9,7 +9,7 @@
 import Foundation
 import Contacts
 
-struct FacebookContact: Identifiable {
+struct FBContact: Identifiable {
     let id: String
     
     let name: String

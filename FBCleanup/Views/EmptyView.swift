@@ -1,6 +1,6 @@
 //
 //  EmptyView.swift
-//  FacebookCleanup
+//  FBCleanup
 //
 //  Created by Robert Tolar Haining on 6/11/20.
 //  Copyright © 2020 Robert Tolar Haining. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  FacebookCleanup
+//  FBCleanup
 //
 //  Created by Robert Tolar Haining on 6/9/20.
 //  Copyright © 2020 Robert Tolar Haining. All rights reserved.
@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view that provides the window contents.
         let contentView = ContentView { [weak self] in
-            self?.deleteFacebookURLsFromContacts()
+            self?.deleteFBURLsFromContacts()
         }
         self.contentView = contentView
 
@@ -65,8 +65,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func display(_ cnContacts: [CNContact]) {
-        let fbContacts = cnContacts.map { (contact) -> FacebookContact in
-            return FacebookContact(contact: contact)
+        let fbContacts = cnContacts.map { (contact) -> FBContact in
+            return FBContact(contact: contact)
         }.sorted { (a, b) -> Bool in
             return a.name.compare(b.name) == .orderedAscending
         }
@@ -78,10 +78,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
-    func deleteFacebookURLsFromContacts() {
+    func deleteFBURLsFromContacts() {
         guard let contactsToClean = contactsToClean, contactsToClean.count > 0 else { return }
         
-        contactsCleaner.deleteFacebookURLs(from: contactsToClean)
+        contactsCleaner.deleteFBURLs(from: contactsToClean)
         
         refreshContacts()
     }

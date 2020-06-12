@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  FacebookCleanup
+//  FBCleanup
 //
 //  Created by Robert Tolar Haining on 6/9/20.
 //  Copyright © 2020 Robert Tolar Haining. All rights reserved.
@@ -11,7 +11,7 @@ import Contacts
 
 struct ContentView: View {
     @ObservedObject var viewModel = ContactsViewModel()
-    var deleteFacebookURLsFromContacts: (() -> Void)
+    var deleteFBURLsFromContacts: (() -> Void)
     @State private var showingAlert = false
     
     var body: some View {
@@ -43,7 +43,7 @@ struct ContentView: View {
                     Alert(title: Text("Final warning"),
                           message: Text("You are about to remove fb:// URLs from \(viewModel.contacts.count) contacts."),
                         primaryButton: .destructive(Text("Delete"), action: {
-                            self.deleteFacebookURLsFromContacts()
+                            self.deleteFBURLsFromContacts()
                     }),
                         secondaryButton: .cancel(Text("Cancel"))
                     )
@@ -73,26 +73,26 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(viewModel: ContactsViewModel(
             [
-                FacebookContact(id: "id1", name: "my name a", urls: "fb://asdfasdf"),
-                FacebookContact(id: "id2", name: "my name b", urls: "fb://asdfasdf"),
-                FacebookContact(id: "id3", name: "my name c", urls: "fb://asdfasdf"),
-                FacebookContact(id: "id4", name: "my name d", urls: "fb://asdfasdf"),
-                FacebookContact(id: "id5", name: "my name e", urls: "fb://asdfasdf"),
-                FacebookContact(id: "id6", name: "my name f", urls: "fb://asdfasdf"),
-                FacebookContact(id: "id7", name: "my name g", urls: "fb://asdfasdf"),
-                FacebookContact(id: "id8", name: "my name h", urls: "fb://asdfasdf"),
-                FacebookContact(id: "id9", name: "my name i", urls: "fb://asdfasdf"),
-                FacebookContact(id: "id10", name: "my name j", urls: "fb://asdfasdf"),
-                FacebookContact(id: "id11", name: "my name k", urls: "fb://asdfasdf"),
-                FacebookContact(id: "id12", name: "my name l", urls: "fb://asdfasdf"),
-                FacebookContact(id: "id13", name: "my name m", urls: "fb://asdfasdf"),
-                FacebookContact(id: "id14", name: "my name n", urls: "fb://asdfasdf"),
-                FacebookContact(id: "id15", name: "my name o", urls: "fb://asdfasdf"),
-                FacebookContact(id: "id16", name: "my name p", urls: "fb://asdfasdf"),
-                FacebookContact(id: "id17", name: "my name q", urls: "fb://asdfasdf"),
-                FacebookContact(id: "id18", name: "my name r", urls: "fb://asdfasdf"),
-                FacebookContact(id: "id19", name: "my name s", urls: "fb://asdfasdf")
+                FBContact(id: "id1", name: "my name a", urls: "fb://asdfasdf"),
+                FBContact(id: "id2", name: "my name b", urls: "fb://asdfasdf"),
+                FBContact(id: "id3", name: "my name c", urls: "fb://asdfasdf"),
+                FBContact(id: "id4", name: "my name d", urls: "fb://asdfasdf"),
+                FBContact(id: "id5", name: "my name e", urls: "fb://asdfasdf"),
+                FBContact(id: "id6", name: "my name f", urls: "fb://asdfasdf"),
+                FBContact(id: "id7", name: "my name g", urls: "fb://asdfasdf"),
+                FBContact(id: "id8", name: "my name h", urls: "fb://asdfasdf"),
+                FBContact(id: "id9", name: "my name i", urls: "fb://asdfasdf"),
+                FBContact(id: "id10", name: "my name j", urls: "fb://asdfasdf"),
+                FBContact(id: "id11", name: "my name k", urls: "fb://asdfasdf"),
+                FBContact(id: "id12", name: "my name l", urls: "fb://asdfasdf"),
+                FBContact(id: "id13", name: "my name m", urls: "fb://asdfasdf"),
+                FBContact(id: "id14", name: "my name n", urls: "fb://asdfasdf"),
+                FBContact(id: "id15", name: "my name o", urls: "fb://asdfasdf"),
+                FBContact(id: "id16", name: "my name p", urls: "fb://asdfasdf"),
+                FBContact(id: "id17", name: "my name q", urls: "fb://asdfasdf"),
+                FBContact(id: "id18", name: "my name r", urls: "fb://asdfasdf"),
+                FBContact(id: "id19", name: "my name s", urls: "fb://asdfasdf")
             ]
-        ), deleteFacebookURLsFromContacts: {})
+        ), deleteFBURLsFromContacts: {})
     }
 }

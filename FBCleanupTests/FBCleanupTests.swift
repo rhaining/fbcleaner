@@ -47,7 +47,7 @@ class FBCleanupTests: XCTestCase {
             XCTAssertEqual(contacts?.count, count)
             XCTAssertNil(error)
             
-            self!.contactsCleaner.cleanFacebookContacts(contacts!)
+            self!.contactsCleaner.deleteFBURLs(from: contacts!)
             
             self!.contactsCleaner.fetch { (contacts, error) in
                 XCTAssertEqual(contacts?.count, 0)

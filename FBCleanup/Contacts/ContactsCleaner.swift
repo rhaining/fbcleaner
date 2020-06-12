@@ -1,6 +1,6 @@
 //
 //  ContactsCleaner.swift
-//  FacebookCleanup
+//  FBCleanup
 //
 //  Created by Robert Tolar Haining on 6/9/20.
 //  Copyright © 2020 Robert Tolar Haining. All rights reserved.
@@ -15,7 +15,7 @@ class ContactsCleaner {
     func fetch(completion: @escaping (([CNContact]?, Error?) -> Void)) {
         contactStore.requestAccess(for: .contacts) { [weak self] (success, error) in
             if success {
-                let matchingContacts = self?.fetchFacebookContacts()
+                let matchingContacts = self?.fetchFBContacts()
                 completion(matchingContacts, nil)
             } else {
                 NSLog("error \(String(describing: error))")
@@ -24,20 +24,19 @@ class ContactsCleaner {
         }
     }
     
-    private func fetchFacebookContacts() -> [CNContact] {
+    private func fetchFBContacts() -> [CNContact] {
         let allContacts = fetchAllContacts()
-        let facebookedContacts = allContacts.compactMap { (contact) -> CNContact? in
+        let fbContacts = allContacts.compactMap { (contact) -> CNContact? in
             for url in contact.urlAddresses where url.value.contains("fb://") {
                 return contact
             }
             return nil
         }
         
-        return facebookedContacts
-        
+        return fbContacts
     }
     
-    func deleteFacebookURLs(from contacts: [CNContact]) {
+    func deleteFBURLs(from contacts: [CNContact]) {
         var contactsToSave: [CNMutableContact] = []
         
         for contact in contacts {
